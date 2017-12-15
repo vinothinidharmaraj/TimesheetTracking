@@ -1,0 +1,97 @@
+﻿@model TimeTracking.Models.MembersProjectViewModel
+
+@{
+    ViewBag.Title = "AddMember";
+}
+@section scripts{
+    <script type="text/javascript">
+
+
+        $(function () {
+
+            var btnClicked;
+            $(".member-remove").click(function () {
+                btnClicked = $(this);
+
+            });
+            $("#modal-remove").click(function () {
+
+                btnClicked.parent("form").submit();
+
+            });
+
+        });
+
+
+    </script>
+
+}
+<h2>Members</h2>
+
+@if (ViewBag.Users.Count > 0)
+{
+    <p>
+        @using (Html.BeginForm("AddMember", "Projects", null, FormMethod.Post, new { @class = "form-inline" }))
+        {
+            @Html.HiddenFor(m => m.IdProject)
+            @Html.DropDownListFor(m => m.IdMemberAdd, new SelectList(ViewBag.Users, "Id", "UserName"), new { @class = "form-control" })
+            <input type="submit" value="Add Member" class="btn btn-primary"/>
+        }
+    </p>
+    <p>
+        @Html.ActionLink("Back to List", "Index", "Projects")
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            <h5>Name</h5>
+        </th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>
+            <span class="glyphicon glyphicon-star"></span>
+            @Html.DisplayFor(model => model.Owner)
+        </td>
+        <td></td>
+    </tr>
+
+    @foreach (var item in Model.Members)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @using (Html.BeginForm("RemoveMember", "Projects", new { IdProject = Model.IdProject, IdMemberRemove = item.ID }))
+                {
+                    <a class="member-remove" data-toggle="modal" data-target="#remove-member-modal" href="#">Remove</a>
+
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+@* Html do modal *@
+<div id="remove-member-modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                <p>Do you really want to remove this member?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                @*<button type="button" class="btn btn-primary">Remove</button>*@
+                <a id="modal-remove" class="btn btn-primary" href="#">Remove</a>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

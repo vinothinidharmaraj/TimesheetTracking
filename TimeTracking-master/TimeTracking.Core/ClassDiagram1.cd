@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access" MembersFormat="NameAndType">
+  <Class Name="TimeTracking.Migrations.Initial" BaseTypeListCollapsed="true">
+    <Position X="2.5" Y="2.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAMAAAAAAAAAAAAAAAAAAAAAAAAAAQEAAAAAI=</HashCode>
+      <FileName>Migrations\201409221718264_Initial.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TimeTracking.Migrations.AddedActivityStatusDeleted" BaseTypeListCollapsed="true">
+    <Position X="6" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAMAAAAAAAAAAAAAAAAAAAAAAAAAAQEAAAAAI=</HashCode>
+      <FileName>Migrations\201409241841442_AddedActivityStatusDeleted.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TimeTracking.Migrations.AddedFinalizationDateToActivities" BaseTypeListCollapsed="true">
+    <Position X="0.75" Y="1.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAMAAAAAAAAAAAAAAAAAAAAAAAAAAQEAAAAAI=</HashCode>
+      <FileName>Migrations\201409290207407_AddedFinalizationDateToActivities.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TimeTracking.Migrations.Configuration">
+    <Position X="0.75" Y="2.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Migrations\Configuration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TimeTracking.Models.Activity">
+    <Position X="2.5" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>QAAgiAAAQAAAAAAAAAAACAQAAAAAAAAAECAAAAgAIAA=</HashCode>
+      <FileName>Models\Activity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TimeTracking.Models.ActivitiesFilters">
+    <Position X="0.75" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAQAAAAAAQAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>Models\Activity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TimeTracking.Models.ActivityType">
+    <Position X="4.25" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ActivityType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TimeTracking.Models.ApplicationUser">
+    <Position X="4.25" Y="1.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Models\IdentityModels.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TimeTracking.Models.ApplicationDbContext">
+    <Position X="2.5" Y="1.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABAAAEEAAAAEAAAAAAAIAAIQA=</HashCode>
+      <FileName>Models\IdentityModels.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TimeTracking.Models.Project">
+    <Position X="4.25" Y="2.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>QAAAAACAAAAAAAAAAAAAAAQEBAAAAAAAAAAgAIAAAAA=</HashCode>
+      <FileName>Models\Project.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TimeTracking.Models.ProjectType">
+    <Position X="6" Y="2.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ProjectType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TimeTracking.Core.Models.Comment">
+    <Position X="6" Y="1.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAgAABAAAAAAAA=</HashCode>
+      <FileName>Models\Comment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="TimeTracking.Core.Models.ActivityStatus">
+    <Position X="0.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAQAEAAAAQAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ActivityStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

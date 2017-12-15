@@ -1,0 +1,42 @@
+﻿@model IEnumerable<TimeTracking.Models.CommentsViewModel>
+
+<p>
+    @Html.ActionLink("Create New Comment", "AddComment", new { id = ViewBag.ActivityId }, new { @class = "btn btn-primary" })
+</p>
+
+<div class="container">
+    <div class="row">
+        <div class="panel panel-default widget">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-comment"></span>
+                    Comments List
+                </h3>
+                </div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    @foreach (var item in Model)
+                    {
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-xs-2 col-md-1">
+                                    <img src="~/imgs/users/1.png" alt="" />
+                                </div>
+                                <div class="col-xs-10 col-md-11">
+                                    <div>
+                                        <div class="mic-info">
+                                            By: @item.CommentOwner on @item.CreationDate
+                                        </div>
+                                    </div>
+                                    <div class="comment-text">
+                                        @item.Description
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

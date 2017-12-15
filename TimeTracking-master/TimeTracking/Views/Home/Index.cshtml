@@ -1,0 +1,138 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    @*@<h1>Time Tracking</h1>)*@
+
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <img src="/imgs/banner-home-1.png" alt="...">
+
+            </div>
+            <div class="item">
+                <img src="/imgs/banner-home-2.png" alt="...">
+
+            </div>
+            <div class="item">
+                <img src="/imgs/banner-home-3.png" alt="...">
+
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Tecnologias</h2>
+        <p>
+            Saiba mais sobre as tecnologias usadas no desenvolvimento deste projeto.
+        </p>
+        <p>
+            <!-- Button trigger modal -->
+            <button class="btn btn-primary" data-toggle="modal" data-target="#modalDica1">
+                See more
+            </button>
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>Layout</h2>
+        <p>Saiba mais sobre como o layout deste projeto foi discutido e desenvolvido.</p>
+        <p>
+            <!-- Button trigger modal -->
+            <button class="btn btn-primary" data-toggle="modal" data-target="#modalDica2">
+                See more
+            </button>
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>Arquitetura</h2>
+        <p>Arquitetura MVC e seus desafios</p>
+        <p>
+            <!-- Button trigger modal -->
+            <button class="btn btn-primary" data-toggle="modal" data-target="#modalDica3">
+                See more
+            </button>
+        </p>
+    </div>
+</div>
+<div id="modalDica1" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Tecnologias</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    * Usando Mvc 5  que já vem com o bootstrap 3.<br>
+                    * ASP.NET Identity que já vem com criação de usuários "pronta", usando IdentityDbContext.<br>
+                    * Entity framework 6 que tem suporte a enums e consultas async (a partir do EF5).<br>
+                    * Entity Framework Code First é mais fácil, mais rápido e prático na hora de dar manutenções através doEntity Framework Migrations.<br>
+                    * JQuery (para o ajax da tela de details do projeto, apesar de bem pouquinho).<br>
+                    * SQL server Local Db - sqlserver local criado no app Data, (default no template do Mvc 5).<br>
+                    * Scaffold - apesar de alterar depois todo o arquivo, foi usado para criar o básico dos controllers e views.<br>
+                    * GIT - local para controle de versão (não o github, só o git mesmo).&hellip;
+                </p>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div id="modalDica2" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Layout</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    * Baixado template do BootWatch com github com o git em less , baixado as dependências com o npm
+                    * Alterado cores e compilado o less em css com o grunt.<br>
+                    * Git - programa de controle de versão que baixa do github.<br>
+                    * Arquivos .less - linguagem que cria css com uma sintaxe que tem que escrever menos código.<br>
+                    * npm - algo como o nugget, da comunidade javascript.<br>
+                    * Grunt - automatizador de builds (tipo o ctrl+shift+b do visual studio) para montar o css
+                    no site do bootwatch é só seguir o tutorial.<br> 
+                    * Usado Bootstrap 3, para todo o resto, modal, Jumbotron de imagens, etc.&hellip;
+                </p>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div id="modalDica3" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Arquitetura</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    * ViewModels - ao invés de usar a própria entidade na view.Além de ser uma boa prática aumenta a performance, porque só traz do banco "parte" da entidade.<br>
+                    * Dll Core - separado as entidades e migrations em uma outra dll para criar uma pseudo arquitetura de 3 camadas, separando o negócio da apresentação.<br>
+                    * Métodos de extensão - ajudam a criar uma DSL (linguagem específica do domínio), tornando as consultas mais legíveis e reaproveitáveis.<br>
+                    * Entidades burras - por enquanto as entidades são burras e a regra de negócio está ainda bastante nos controllers, mas isso pelo prazo curto do projeto e por o projeto ser muito "crud".
+                    &hellip;
+                </p>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

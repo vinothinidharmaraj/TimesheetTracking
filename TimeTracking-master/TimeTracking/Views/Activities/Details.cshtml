@@ -1,0 +1,87 @@
+﻿@model TimeTracking.Models.DetailsActivityViewModel
+
+<div>
+    <h4>Details Activity</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ActivityId)
+
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ActivityId)
+            @Html.HiddenFor(model => model.ActivityId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ActivityType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ActivityType)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ActivityStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ActivityStatus)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Creator)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Creator)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AssignedUser)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AssignedUser)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.WorkingTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WorkingTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreationDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @if (Model.CanEdit)
+    {
+        @Html.ActionLink("Edit Activity", "Edit", new { id = Model.ActivityId }) @(" | ")
+        @Html.ActionLink("Back to List", "Details", "Projects", new { id = Model.ProjectId }, null)
+    }
+    else
+    {
+       @Html.ActionLink("Back to List", "Details", "Projects", new { id = Model.ProjectId }, null)
+
+    }
+
+</p>
+<div id="comments">
+    <img src='@Url.Content("~/Content/720.gif")' alt="loading activities">
+</div>
+@section scripts{
+
+    <script src="~/Scripts/Pages/Ativity-Details.js"></script>
+}

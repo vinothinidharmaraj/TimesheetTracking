@@ -1,0 +1,69 @@
+﻿@model IEnumerable<TimeTracking.Models.IndexActivityViewModel>
+<h1>Activities List</h1>
+<p>
+    @Html.ActionLink("Create New Activity", "Create", new { id = ViewBag.ProjectId }, new { @class = "btn btn-primary" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.AssignedUser)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ActivityStatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Creator)
+        </th>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.WorkingTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </th>  
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AssignedUser)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ActivityStatus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Creator)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WorkingTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreationDate)
+        </td>
+
+        <td>
+            @if(item.CanEdit)
+            { 
+            @Html.ActionLink("Edit Activity", "Edit", new { id = item.ActivityId }) @(" | ")
+            @Html.ActionLink("Details", "Details", new { id = item.ActivityId })
+            
+            }
+            else
+            {
+            @Html.ActionLink("Details", "Details", new { id = item.ActivityId }) 
+           
+            }
+        </td>
+    </tr>
+}
+
+</table>

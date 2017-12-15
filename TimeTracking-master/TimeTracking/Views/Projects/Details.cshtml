@@ -1,0 +1,96 @@
+﻿@model TimeTracking.Models.DetailsProjectViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+<h2>Details</h2>
+<div>
+    <h4>Project</h4>
+    @Html.HiddenFor(model => model.ProjectID)
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Owner)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Owner)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreationDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @if (Model.IsOwner)
+    {
+        @Html.ActionLink("Edit Project", "Edit", new { id = Model.ProjectID }) @(" | ")
+        @Html.ActionLink("Back to List", "Index")
+    }
+    else
+    {
+        @Html.ActionLink("Back to List", "Index")
+    }
+</p>
+
+<div id="GridViewForTime">
+    <div class="row">
+        @{
+            <div class="col-sm-5"><label>Tasks</label> </div>
+            foreach (var item in ViewBag.dates.weekDates)
+            {
+                <div class="col-sm-1"><div><label style="display:block; text-align: center;">@item.DayOfWeek</label></div><div><label style="display:block; text-align: center;">@item.Month \ @item.Day</label></div></div>
+            }
+
+        }
+    </div>
+
+
+    <div class="row">
+
+        @{
+            foreach (var tasks in Model.Activities)
+            {
+
+                <div class="col-sm-5">@tasks.Value</div>
+
+                foreach (var item in ViewBag.dates.weekDates)
+                {
+                    //if (@tasks.ActivityStatus == "InProgress")
+                    {
+                        <div class="col-sm-1" style="padding-left:1px;padding-right:1px"><input style="align-content:center;padding:0,1px,0,1px; width:100%;" id=@item +"HoursTxt" type="number" /></div>
+                    }
+                }
+            }
+        }
+    </div>
+    <div>
+        <div>
+            <span>
+                <input type="button" value="Create" onclick="location.href='@Url.Action("Create/"+Model.ProjectID,"Activities")'" />
+            </span>
+            <span>
+                <input type="button" value="SaveTimeData" onclick="" />
+                />
+            </span>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/Scripts/Pages/details-page.js"></script>
+}
