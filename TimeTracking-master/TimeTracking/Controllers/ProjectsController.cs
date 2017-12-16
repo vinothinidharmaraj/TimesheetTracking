@@ -58,15 +58,28 @@ namespace TimeTracking.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             //List<keyvaluePair> mycurrentActivities = new List<keyvaluePair>();
-        //    var activityNames = db.Activities.Where(p => p.Project.ProjectID == id).ToDictionary(x => x.ActivityID, x => x.Name);
+            var activities = await db.Activities.Where(p => p.Project.ProjectID == id).Select(a => new DetailsActivityViewModel()
+            {
+                ActivityId = a.ActivityID,
+                Name = a.Name,
+                ActivityType = a.ActivityType.Description,
+                ActivityStatus = a.ActivityStatus.ToString(),
+                Creator = a.Creator.UserName,
+                AssignedUser = a.AssignedUser.UserName,
+                WorkingTime = a.WorkingTime,
+                CreationDate = a.CreationDate,
+                ProjectId = a.Project.ProjectID,
+                CanEdit = a.Project.Owner.Id == userId || a.Creator.Id == userId || a.AssignedUser.Id == userId
+            }).ToListAsync();
 
-    //   var data = await  db.Activities.Join(activity => activity.ActivityID, timedat => timedat.ActivityId,)
-    //        var td = await (from s in db.Activities
-    //join r in db.Timedata on s.ActivityID equals r.ActivityId
-    //where s.Project.ProjectID == id
-    //select new { s, r }).ToListAsync();
 
-          //  var timesheet = db.Timedata.Where(t => activityNames.ContainsKey(t.ActivityId));
+            //   var data = await  db.Activities.Join(activity => activity.ActivityID, timedat => timedat.ActivityId,)
+            //        var td = await (from s in db.Activities
+            //join r in db.Timedata on s.ActivityID equals r.ActivityId
+            //where s.Project.ProjectID == id
+            //select new { s, r }).ToListAsync();
+
+            //  var timesheet = db.Timedata.Where(t => activityNames.ContainsKey(t.ActivityId));
             var model = await db.Projects.Where(p => p.ProjectID == id).Select(p => new DetailsProjectViewModel()
             {
                 ProjectID = p.ProjectID,
@@ -83,7 +96,7 @@ namespace TimeTracking.Controllers
                 return HttpNotFound();
             }
 
-          //  model.Activities = activityNames;
+            model.Activities = activities;
             ViewBag.dates = new DatesClass()
             {
                 weekDates = Returncurrentweek(DateTime.Today)

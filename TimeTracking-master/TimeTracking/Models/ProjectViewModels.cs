@@ -39,8 +39,6 @@ namespace TimeTracking.Models
 
     }
 
-
-
     public class DetailsProjectViewModel
     {
         public int ProjectID { get; set; }
@@ -50,7 +48,7 @@ namespace TimeTracking.Models
         public string Owner { get; set; }
         public IEnumerable<string> Members { get; set; }
         public bool IsOwner { get; set; }
-        public Dictionary<int, string> Activities { get; set; }
+        public List<DetailsActivityViewModel> Activities { get; set; }
 
     }
 

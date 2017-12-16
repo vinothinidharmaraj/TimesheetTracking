@@ -1,0 +1,39 @@
+﻿.detailgrid {
+}
+.GridViewForTime div{
+    margin-top:5px;
+}
+
+
+.daterange * {
+    margin-right: 5px;
+}
+.daterange > div {
+    float: left;
+    margin-right: 10px;
+}
+.timesheetentry{
+    clear:both;
+}
+table {
+    table-layout: fixed;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 1px;
+}
+td input {
+    border: none;
+    width: 100%;
+    text-align: right;
+}
+
+td:nth-child(1) > input {
+    text-align: left;
+}
