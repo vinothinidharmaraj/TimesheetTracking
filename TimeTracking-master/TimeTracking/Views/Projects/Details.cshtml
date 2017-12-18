@@ -77,33 +77,33 @@
                                 <label>Tasks</label>
                             </th>
                             @foreach (var item in ViewBag.dates.weekDates)
-                        {
-                            <th>
-                                <label>@item.DayOfWeek</label>
-                                <label>@item.Month \ @item.Day</label>
-                            </th>
-                    }
+                            {
+                                <th>
+                                    <label>@item.DayOfWeek</label>
+                                    <label>@item.Month \ @item.Day</label>
+                                </th>
+                            }
                         </tr>
                     </thead>
-                if (Model == null || Model.Activities == null || !Model.Activities.Any())
-                { return; }
+                    if (Model == null || Model.Activities == null || !Model.Activities.Any())
+                    { return; }
 
-                <tbody>
-                    @foreach (var activity in Model.Activities)
-                {
-                    <tr>
-                        <td>
-                            <input class="taskname" id="taskname" @activity.ActivityId value="@activity.Name" />
-                        </td>
-                        @foreach (var item in ViewBag.dates.weekDates)
-                    {
-                        <td>
-                            <input data-date="@item" type="number" />
-                        </td>
-                }
-                    </tr>
-            }
-                </tbody>
+                    <tbody>
+                        @foreach (var activity in Model.Activities)
+                        {
+                            <tr>
+                                <td>
+                                    <input class="taskname" id="taskname" @activity.ActivityId value="@activity.Name" />
+                                </td>
+                                @foreach (var item in ViewBag.dates.weekDates)
+                                {
+                                    <td>
+                                        <input data-date="@item" type="number" />
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
                 }
             </table>
         </div>
@@ -119,6 +119,4 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="~/Scripts/Pages/details-page.js"></script>
-
-
 }
