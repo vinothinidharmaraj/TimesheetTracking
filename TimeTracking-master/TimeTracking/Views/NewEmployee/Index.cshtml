@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Create New User Record</h2>
+<hr />
+@using (Html.BeginForm("CreateUser", "NewEmployee"))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <p>
+        Email : @Html.TextBox("Email")
+    </p>
+
+    <input type="submit" value="Save" />
+}
+

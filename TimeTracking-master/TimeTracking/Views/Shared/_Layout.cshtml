@@ -96,6 +96,7 @@
     </style>
 </head>
 <body>
+
     <div class="navbar navbar-inverse">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-inverse-collapse">
@@ -130,6 +131,13 @@
                                 <li><a href="@Url.Action("UserProductivityPerPeriod", "Reports")">Choose a period</a></li>
                                 <li><a href="@Url.Action("UserTotalHours", "Reports")">Total hours</a></li>
                                 <li><a href="@Url.Action("UserTotalHoursRemaining", "Reports")">User Remaining Hours</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">Roles</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="@Url.Action("ManageUserRoles", "Roles")">Manage User Roles</a></li>
+                                <li><a href="@Url.Action("Index", "Roles")">Manage Roles</a></li>
                             </ul>
                         </li>
                     </ul>

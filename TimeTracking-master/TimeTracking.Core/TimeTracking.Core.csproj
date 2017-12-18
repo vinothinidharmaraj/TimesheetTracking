@@ -75,17 +75,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201409221718264_Initial.cs" />
-    <Compile Include="Migrations\201409221718264_Initial.Designer.cs">
-      <DependentUpon>201409221718264_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201409241841442_AddedActivityStatusDeleted.cs" />
-    <Compile Include="Migrations\201409241841442_AddedActivityStatusDeleted.Designer.cs">
-      <DependentUpon>201409241841442_AddedActivityStatusDeleted.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201409290207407_AddedFinalizationDateToActivities.cs" />
-    <Compile Include="Migrations\201409290207407_AddedFinalizationDateToActivities.Designer.cs">
-      <DependentUpon>201409290207407_AddedFinalizationDateToActivities.cs</DependentUpon>
+    <Compile Include="Migrations\201712152237348_Initial.cs" />
+    <Compile Include="Migrations\201712152237348_Initial.Designer.cs">
+      <DependentUpon>201712152237348_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -99,23 +91,19 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201409221718264_Initial.resx">
-      <DependentUpon>201409221718264_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201409241841442_AddedActivityStatusDeleted.resx">
-      <DependentUpon>201409241841442_AddedActivityStatusDeleted.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201409290207407_AddedFinalizationDateToActivities.resx">
-      <DependentUpon>201409290207407_AddedFinalizationDateToActivities.cs</DependentUpon>
-    </EmbeddedResource>
+    <Folder Include="Diagram\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Diagram\" />
+    <EmbeddedResource Include="Migrations\201712152237348_Initial.resx">
+      <DependentUpon>201712152237348_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
