@@ -21,6 +21,8 @@ namespace TimeTracking.Models
         public virtual ICollection<Comment> Comments { get; set; }
         public ActivityStatus ActivityStatus { get; set; }
         public DateTime? FinalizationDate { get; set; }
+        public int NoOfHours { get; set; }
+        public DateTime ActivityDate { get; set; }
     }
 
 

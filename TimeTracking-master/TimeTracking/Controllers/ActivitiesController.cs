@@ -102,6 +102,48 @@ namespace TimeTracking.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public async Task<JsonResult> AddActivities(List<DetailsActivityViewModel> activities)
+        {
+            int projectId = 0;
+            //if (ModelState.IsValid)
+            //{
+            var userId = User.Identity.GetUserId();
+            ApplicationUser user = null;
+
+            foreach (var item in activities)
+            {
+                projectId = item.ProjectId;
+
+                var activity = new Activity
+                {
+                    Name = item.Name,
+                    CreationDate = DateTime.UtcNow,
+                    AssignedUser = user,
+                    Project = await db.Projects.FirstAsync(p => p.ProjectID == item.ProjectId),
+                    WorkingTime = item.WorkingTime,
+                    Creator = await db.Users.FirstAsync(u => u.Id == userId),
+                    ActivityStatus = Core.Models.ActivityStatus.Created,
+                    NoOfHours = item.NoOfHours
+                };
+                DateTime activityDate;
+                if (DateTime.TryParse(item.ActivityDate, out activityDate))
+                {
+                    activity.ActivityDate = activityDate;
+                }
+
+                var existing = await db.Activities.Where(x => x.ActivityDate == activityDate).ToListAsync();
+                db.Activities.RemoveRange(existing);
+                db.Activities.Add(activity);
+                await db.SaveChangesAsync();
+            }
+
+            //  ViewBag.ActivityTypes = db.ActivityTypes.ToList();
+            // ViewBag.MemberList = db.Projects.Where(p => p.ProjectID == projectId).SelectMany(p => p.ApplicationUsers).ToList();
+            //  return new JsonResult();
+            return Json(new { success = true });
+        }
+
         // POST: Projects/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.

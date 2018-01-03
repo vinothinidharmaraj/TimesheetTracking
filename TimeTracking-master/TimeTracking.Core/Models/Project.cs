@@ -20,6 +20,7 @@ namespace TimeTracking.Models
         public virtual ApplicationUser Owner { get; set; }
 
         public virtual ProjectType ProjectType { get; set; }
+        public virtual Client Client { get; set; }
         public virtual ICollection<Activity> Activities { get; set; }
 
         

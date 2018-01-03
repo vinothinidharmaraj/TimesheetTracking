@@ -1,33 +1,59 @@
 ﻿.detailgrid {
 }
-.GridViewForTime div{
-    margin-top:5px;
+
+.GridViewForTime div {
+    margin-top: 5px;
 }
 
 
 .daterange * {
     margin-right: 5px;
 }
+
 .daterange > div {
     float: left;
     margin-right: 10px;
 }
-.timesheetentry{
-    clear:both;
+
+.timesheetentry {
+    clear: both;
 }
-table {
+
+.holidayhighlight {
+    background-color: #DCDCDC;
+}
+
+.taskcontainer {
     table-layout: fixed;
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
     margin-top: 20px;
+    border-spacing: 0;
+    width: 100%;
+    display: table;
 }
+
+    .taskcontainer tr {
+        border-bottom: 1px solid #ddd;
+    }
 
 td, th {
     border: 1px solid #dddddd;
-    text-align: center;
-    padding: 1px;
+    padding: 8px 8px;
+    display: table-cell;
+    text-align: left;
+    vertical-align: top;
 }
+
+#totalHours {
+    font-size: large;
+}
+
+.glyphicon {
+    padding: 2px;
+}
+
 td input {
     border: none;
     width: 100%;
@@ -36,4 +62,9 @@ td input {
 
 td:nth-child(1) > input {
     text-align: left;
+}
+
+.savedata {
+    float: right;
+    display: none;
 }

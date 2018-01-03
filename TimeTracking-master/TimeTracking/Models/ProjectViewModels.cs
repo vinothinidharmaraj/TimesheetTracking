@@ -10,7 +10,7 @@ namespace TimeTracking.Models
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public string Type { get; set; }
+        public string Client { get; set; }
         [Display(Name = "Creation Date")]
         public bool IsOwner { get; set; }
         public DateTime CreationDate { get; set; }
@@ -22,8 +22,8 @@ namespace TimeTracking.Models
         [Required]
         public string Name { get; set; }
 
-        [Display(Name = "Project Type")]
-        public int TypeID { get; set; }
+        [Display(Name = "Client Name")]
+        public int ClientId { get; set; }
 
     }
 
@@ -35,7 +35,7 @@ namespace TimeTracking.Models
         [Required]
         public string Name { get; set; }
 
-        public int TypeID { get; set; }
+        public int ClientId { get; set; }
 
     }
 
@@ -48,19 +48,11 @@ namespace TimeTracking.Models
         public string Owner { get; set; }
         public IEnumerable<string> Members { get; set; }
         public bool IsOwner { get; set; }
+        public string PublicHolidays { get; set; }
+        public int ClientId { get; set; }
         public List<DetailsActivityViewModel> Activities { get; set; }
-
     }
 
-    public class keyvaluePair
-    {
-        public int key { get; set; }
-        public string value { get; set; }
-    }
-    public class DatesClass
-    {
-        public List<DateTime> weekDates { get; set; }
-    }
     public class MemberViewModel
     {
         public string ID { get; set; }

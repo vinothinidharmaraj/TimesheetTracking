@@ -45,8 +45,10 @@ namespace TimeTracking.Models
         public bool CanEdit { get; set; }
         public bool IsShowActivity { get; set; }
         public int ProjectId { get; set; }
-        public DateTime TimeSheetDate { get; set; }
+        public string ActivityDate { get; set; }
         public int NoOfHours { get; set; }
+        public bool isPublicHoliday { get; set; }
+        public bool isWeekEnd { get; set; }
     }
 
     public class CreateActivityViewModel
@@ -62,7 +64,6 @@ namespace TimeTracking.Models
         [Display(Name = "Working Time")]
         public TimeSpan WorkingTime { get; set; }
         public int ProjectId { get; set; }
-
     }
 
     public class TimesheetViewModel

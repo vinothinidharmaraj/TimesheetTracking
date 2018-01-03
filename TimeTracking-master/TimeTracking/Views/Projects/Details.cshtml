@@ -1,4 +1,8 @@
 ﻿<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+@*<link rel="stylesheet" href="https://github.com/uxsolutions/bootstrap-datepicker" />*@
+<link rel="stylesheet" href="~/Content/bootstrap-datepicker.css" />
+@*<link rel="stylesheet" href="~/Content/bootstrap-datepicker.standalone.css" />*@
+
 <link rel="stylesheet" href="~/Content/Page/detailsPage.css" />
 
 @model TimeTracking.Models.DetailsProjectViewModel
@@ -9,36 +13,9 @@
 <div class="container">
     <h2>Details</h2>
     <div>
-        <h4>Project</h4>
+        <h4>Project - @Html.DisplayFor(model => model.Name)</h4>
         @Html.HiddenFor(model => model.ProjectID)
         <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Name)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Name)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Type)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Type)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Owner)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Owner)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.CreationDate)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.CreationDate)
-            </dd>
-
-        </dl>
     </div>
     <p>
         @if (Model.IsOwner)
@@ -55,68 +32,35 @@
     <div class="GridViewForTime">
         <div class="daterange">
             <div>
-                <label>Period</label>
-                <select id="period"></select>
-            </div>
-            <div>
                 <label>From date</label>
-                <input id="fromdatepicker" type="date" />
+                <input id="fromdatepicker" required />
             </div>
             <div>
                 <label>To date</label>
-                <input id="todatepicker" type="date" />
+                <input id="todatepicker" required />
             </div>
+            <div>
+                Total Hours: 
+                <label id="totalHours"></label>
+            </div>
+            @*<div>
+            <input type="button" id="addworkinghrs" value="Add Hrs" />
+        </div>*@
         </div>
         <div style="clear:both;"></div>
-        <div class="timesheetentry">
-            <table>
-                @{
-                    <thead>
-                        <tr>
-                            <th width="50%">
-                                <label>Tasks</label>
-                            </th>
-                            @foreach (var item in ViewBag.dates.weekDates)
-                            {
-                                <th>
-                                    <label>@item.DayOfWeek</label>
-                                    <label>@item.Month \ @item.Day</label>
-                                </th>
-                            }
-                        </tr>
-                    </thead>
-                    if (Model == null || Model.Activities == null || !Model.Activities.Any())
-                    { return; }
-
-                    <tbody>
-                        @foreach (var activity in Model.Activities)
-                        {
-                            <tr>
-                                <td>
-                                    <input class="taskname" id="taskname" @activity.ActivityId value="@activity.Name" />
-                                </td>
-                                @foreach (var item in ViewBag.dates.weekDates)
-                                {
-                                    <td>
-                                        <input data-date="@item" type="number" />
-                                    </td>
-                                }
-                            </tr>
-                        }
-                    </tbody>
-                }
+        <div>
+            <table class="taskcontainer">
             </table>
         </div>
-        <div>
-            <div>
-                <button id="create">Create</button>
-                <button id="savedata">Submit</button>
-            </div>
+
+        <div class="savedata">
+            <button id="savedata">Submit All</button>
         </div>
     </div>
 </div>
 @section scripts{
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="~/Scripts/Pages/details-page.js"></script>
+    <script src="~/Scripts/Bootstrap-Datetime-Picker.js"></script>
+    <script id="details-page.js" src="~/Scripts/Pages/details-page.js" data-public-holidays="@Model.PublicHolidays"></script>
 }

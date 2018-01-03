@@ -91,6 +91,8 @@
     <Compile Include="Models\Activity.cs" />
     <Compile Include="Models\ActivityStatus.cs" />
     <Compile Include="Models\ActivityType.cs" />
+    <Compile Include="Models\Client.cs" />
+    <Compile Include="Models\ClientHolidays.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Project.cs" />

@@ -50,6 +50,8 @@ namespace TimeTracking.Models
         }
 
         public System.Data.Entity.DbSet<TimeTracking.Models.Project> Projects { get; set; }
+        public System.Data.Entity.DbSet<TimeTracking.Models.Client> Clients { get; set; }
+        public System.Data.Entity.DbSet<TimeTracking.Models.ClientHolidays> ClientHolidays { get; set; }
         public System.Data.Entity.DbSet<TimeTracking.Models.ProjectType> ProjectTypes { get; set; }
         public System.Data.Entity.DbSet<TimeTracking.Models.Activity> Activities { get; set; }
         public System.Data.Entity.DbSet<TimeTracking.Models.ActivityType> ActivityTypes { get; set; }
