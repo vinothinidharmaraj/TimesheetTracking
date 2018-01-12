@@ -1,11 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace TimeTracking.Models
 {
+    public class ProjectViewModel
+    {
+        public int ProjectID { get; set; }
+        public string Name { get; set; }
+        public DateTime CreationDate { get; set; }
+        public string UserId { get; set; }
+        public bool IsOwner { get; set; }
+        public int ClientId { get; set; }
+        public IEnumerable<string> Members { get; set; }
+        public string PublicHolidays { get; set; }
+        public List<DetailsActivityViewModel> Activities { get; set; }
+    }
+
     public class IndexProjectViewModels
     {
         public int ID { get; set; }

@@ -114,6 +114,7 @@
 
         var totalWorkinghrs = 0;
         $.each(existingData, function (index) {
+            this.CanEdit = true;
             var $tr = $("<tr></tr>");
             $tr.addClass("initialRow");
             var $datetd = $("<td></td>");

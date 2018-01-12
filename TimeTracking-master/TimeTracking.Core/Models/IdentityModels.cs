@@ -17,15 +17,16 @@ namespace TimeTracking.Models
         public virtual ICollection<Project> Projects { get; set; }
 
 
-        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
+        /*public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
             return userIdentity;
-        }
+        }*/
     }
 
+    /*
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
@@ -57,5 +58,5 @@ namespace TimeTracking.Models
         public System.Data.Entity.DbSet<TimeTracking.Models.ActivityType> ActivityTypes { get; set; }
         public System.Data.Entity.DbSet<TimeTracking.Core.Models.Comment> Comments { get; set; }
         public System.Data.Entity.DbSet<TimeTracking.Models.TimesheetData> Timedata { get; set; }
-    }
+    }*/
 }

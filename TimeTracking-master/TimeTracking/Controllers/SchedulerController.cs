@@ -16,6 +16,8 @@ using TimeTracking.Models;
 namespace TimeTracking.Controllers
 {
 
+    [Authorize]
+
     public class SchedulerController : Controller
     {
         //

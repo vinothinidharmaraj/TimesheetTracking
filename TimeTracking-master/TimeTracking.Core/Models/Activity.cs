@@ -15,9 +15,9 @@ namespace TimeTracking.Models
         public DateTime CreationDate { get; set; }
         public virtual Project Project { get; set; }
         
-        public virtual ApplicationUser AssignedUser { get; set; }
+       // public virtual ApplicationUser AssignedUser { get; set; }
         
-        public virtual ApplicationUser Creator { get; set; }
+        //public virtual ApplicationUser Creator { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public ActivityStatus ActivityStatus { get; set; }
         public DateTime? FinalizationDate { get; set; }

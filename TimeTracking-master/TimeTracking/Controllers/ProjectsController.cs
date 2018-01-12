@@ -8,11 +8,12 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TimeTracking.Models;
-using Microsoft.AspNet.Identity;
+//using Microsoft.AspNet.Identity;
 using System.Web.Helpers;
 
 namespace TimeTracking.Controllers
 {
+    [Authorize]
     public class ProjectsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -20,18 +21,15 @@ namespace TimeTracking.Controllers
         // GET: Projects
         public async Task<ActionResult> Index()
         {
-            var userId = User.Identity.GetUserId();
-
-
-            var model = await db.Projects.Where(p => p.Owner.Id == userId || p.ApplicationUsers.Any(m => m.Id == userId))
-                                                .Select(p => new IndexProjectViewModels()
-                                                {
-                                                    ID = p.ProjectID,
-                                                    Name = p.Name,
-                                                    Client = p.Client.ClientName,
-                                                    CreationDate = p.CreationDate,
-                                                    IsOwner = p.Owner.Id == userId,
-                                                }).ToListAsync();
+            var userId = User.GetUserId();
+            var model = await db.Projects.Select(p => new IndexProjectViewModels()
+            {
+                ID = p.ProjectID,
+                Name = p.Name,
+                Client = p.Client.ClientName,
+                CreationDate = p.CreationDate,
+             //   IsOwner = p.UserId == userId,
+            }).ToListAsync();
 
             return View(model);
         }
@@ -61,8 +59,8 @@ namespace TimeTracking.Controllers
             }
 
             var dates = DateRange(fdate, tdate);
-            var userId = User.Identity.GetUserId();
-            var activities = await db.Activities.Where(p => p.Project.ProjectID == id && p.Creator.Id == userId &&
+            var userId = User.Identity.Name;//.GetUserId();
+            var activities = await db.Activities.Where(p => p.Project.ProjectID == id && //p.Creator.Id == userId &&
             p.ActivityDate >= fdate && p.ActivityDate <= tdate).ToListAsync();/*.Select(a => new DetailsActivityViewModel()
             {
                 ActivityId = a.ActivityID,
@@ -79,7 +77,8 @@ namespace TimeTracking.Controllers
                 CanEdit = a.Project.Owner.Id == userId || a.Creator.Id == userId || a.AssignedUser.Id == userId
             }).OrderBy(x => x.ActivityDate).ToListAsync();*/
 
-            string holidays = await GetClientHolidays(activities.FirstOrDefault().Project.Client.ClientId);
+            int clientId = 1;
+            string holidays = await GetClientHolidays(clientId);
             var publicHolidays = new List<string>();
             if (!string.IsNullOrWhiteSpace(holidays))
             {
@@ -90,7 +89,7 @@ namespace TimeTracking.Controllers
             foreach (var date in dates)
             {
                 var activitiesPerDate = activities.Where(a => a.ActivityDate.Date == date.Date);
-                
+
                 if (activitiesPerDate == null || !activitiesPerDate.Any())
                 {
                     var model = new DetailsActivityViewModel()
@@ -98,7 +97,7 @@ namespace TimeTracking.Controllers
                         ActivityDate = date.ToShortDateString()
                     };
 
-                    if(date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek  == DayOfWeek.Sunday)
+                    if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
                     {
                         model.isWeekEnd = true;
                     }
@@ -109,20 +108,20 @@ namespace TimeTracking.Controllers
                 {
                     foreach (var item in activitiesPerDate)
                     {
-                       var model = new DetailsActivityViewModel()
+                        var model = new DetailsActivityViewModel()
                         {
                             ActivityId = item.ActivityID,
                             Name = item.Name,
                             //   ActivityType = item.ActivityType.Description,
                             ActivityStatus = item.ActivityStatus.ToString(),
-                            Creator = item.Creator.UserName,
+                            // Creator = item.Creator.UserName,
                             // AssignedUser = item.AssignedUser.UserName,
                             WorkingTime = item.WorkingTime,
                             CreationDate = item.CreationDate,
-                            ProjectId = item.Project.ProjectID,
+                            //ProjectId = item.Project.ProjectID,
                             NoOfHours = item.NoOfHours,
                             ActivityDate = item.ActivityDate.ToShortDateString(),
-                            CanEdit = item.Project.Owner.Id == userId || item.Creator.Id == userId,//|| item.AssignedUser.Id == userId
+                            // CanEdit = item.Project.Owner.Id == userId || item.Creator.Id == userId,//|| item.AssignedUser.Id == userId
                         };
 
                         if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
@@ -147,7 +146,7 @@ namespace TimeTracking.Controllers
         // GET: Projects/Details/5
         public async Task<ActionResult> Details(int? id)
         {
-            var userId = User.Identity.GetUserId();
+            var userId = User.Identity.Name;//.GetUserId();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -157,31 +156,31 @@ namespace TimeTracking.Controllers
             {
                 ProjectID = p.ProjectID,
                 Name = p.Name,
-                Type = p.ProjectType.Description,
+                //Type = p.ProjectType.Description,
                 CreationDate = p.CreationDate,
-                Owner = p.Owner.UserName,
+                //  Owner = p.Owner.UserName,
                 ClientId = p.Client.ClientId,
-                Members = p.ApplicationUsers.Select(ap => ap.UserName),
-                IsOwner = p.Owner.Id == userId
+                // Members = p.ApplicationUsers.Select(ap => ap.UserName),
+                // IsOwner = p.Owner.Id == userId
             }).FirstOrDefaultAsync();
 
             int prevYear = DateTime.Now.AddYears(-1).Year;
             model.PublicHolidays = await GetClientHolidays(model.ClientId);
-            var activities = await db.Activities.Where(p => p.Project.ProjectID == id && p.Creator.Id == userId &&
+            var activities = await db.Activities.Where(p => p.Project.ProjectID == id && //p.Creator.Id == userId &&
             p.ActivityDate.Month == currentMonth).Select(a => new DetailsActivityViewModel()
             {
                 ActivityId = a.ActivityID,
                 Name = a.Name,
                 ActivityType = a.ActivityType.Description,
                 ActivityStatus = a.ActivityStatus.ToString(),
-                Creator = a.Creator.UserName,
-                AssignedUser = a.AssignedUser.UserName,
+                //  Creator = a.Creator.UserName,
+                // AssignedUser = a.AssignedUser.UserName,
                 WorkingTime = a.WorkingTime,
                 CreationDate = a.CreationDate,
                 ProjectId = a.Project.ProjectID,
                 NoOfHours = a.NoOfHours,
                 ActivityDate = a.ActivityDate.ToString(),
-                CanEdit = a.Project.Owner.Id == userId || a.Creator.Id == userId || a.AssignedUser.Id == userId
+                //  CanEdit = a.Project.Owner.Id == userId || a.Creator.Id == userId || a.AssignedUser.Id == userId
             }).OrderBy(x => x.ActivityDate).ToListAsync();
             if (model == null)
             {
@@ -192,7 +191,7 @@ namespace TimeTracking.Controllers
             return View(model);
         }
 
-        private async Task<string> GetClientHolidays(int clientId )
+        private async Task<string> GetClientHolidays(int clientId)
         {
             int prevYear = DateTime.Now.AddYears(-1).Year;
             var clientHoliday = await db.ClientHolidays.Where(c => c.Client.ClientId == clientId &&
@@ -233,8 +232,7 @@ namespace TimeTracking.Controllers
         {
             if (ModelState.IsValid)
             {
-                var userId = User.Identity.GetUserId();
-                var owner = await db.Users.FirstAsync(u => u.Id == userId);
+                var userId = User.GetUserId();
                 var client = await db.Clients.FindAsync(model.ClientId);
 
                 var project = new Project()
@@ -242,8 +240,7 @@ namespace TimeTracking.Controllers
                     Name = model.Name,
                     Client = client,
                     CreationDate = DateTime.Now,
-                    Owner = owner
-
+                    //UserId = userId
                 };
 
                 db.Projects.Add(project);
@@ -352,20 +349,20 @@ namespace TimeTracking.Controllers
             }
 
 
-            if (project.Owner.Id != User.Identity.GetUserId())
-            {
+            /*  if (project.Owner.Id != User.Identity.GetUserId())
+              {
 
-                return new HttpUnauthorizedResult();
-            }
+                  return new HttpUnauthorizedResult();
+              }*/
             var model = await db.Projects.Where(p => p.ProjectID == id).Select(p => new MembersProjectViewModel()
             {
-                Owner = p.Owner.UserName,
-                Members = p.ApplicationUsers.Select(ap => new MemberViewModel()
-                {
-                    ID = ap.Id,
-                    Name = ap.UserName
+                /* Owner = p.Owner.UserName,
+                  Members = p.ApplicationUsers.Select(ap => new MemberViewModel()
+                  {
+                      ID = ap.Id,
+                      Name = ap.UserName
 
-                }),
+                  }),*/
                 IdProject = p.ProjectID
             }).FirstOrDefaultAsync();
 
@@ -375,7 +372,7 @@ namespace TimeTracking.Controllers
 
             userNames.AddRange(model.Members.Select(s => s.Name));
 
-            ViewBag.Users = db.Users.Where(u => !userNames.Contains(u.UserName)).ToList();
+            //ViewBag.Users = db.Users.Where(u => !userNames.Contains(u.UserName)).ToList();
             return View(model);
 
         }
@@ -387,9 +384,9 @@ namespace TimeTracking.Controllers
             {
                 var project = await db.Projects.FindAsync(model.IdProject);
 
-                var newMember = await db.Users.FirstAsync(u => u.Id == model.IdMemberAdd);
+                /*var newMember = await db.Users.FirstAsync(u => u.Id == model.IdMemberAdd);
 
-                project.ApplicationUsers.Add(newMember);
+                project.ApplicationUsers.Add(newMember);*/
 
                 db.SaveChanges();
 
@@ -405,9 +402,9 @@ namespace TimeTracking.Controllers
             {
                 var project = await db.Projects.FindAsync(model.IdProject);
 
-                var thisMember = await db.Users.FirstAsync(u => u.Id == model.IdMemberRemove);
+                /* var thisMember = await db.Users.FirstAsync(u => u.Id == model.IdMemberRemove);
 
-                project.ApplicationUsers.Remove(thisMember);
+                 project.ApplicationUsers.Remove(thisMember);*/
 
                 db.SaveChanges();
 

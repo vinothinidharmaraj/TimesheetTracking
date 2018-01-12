@@ -9,6 +9,7 @@ using System.Data.Entity;
 using Humanizer;
 namespace TimeTracking.Controllers
 {
+    [Authorize]
     public class ReportsController : Controller
     {
 
@@ -90,27 +91,28 @@ namespace TimeTracking.Controllers
 
         public async Task<ActionResult> UserTotalHours()
         {
-            var model = (await db.Projects.SelectMany(p => p.Activities)
-                                                    .Finished()
-                                                    .GroupBy(a => a.AssignedUser)
-                                                    .Select(ag => new
-                                                    {
-                                                        WorkingTimes = ag.Select(a1 => a1.WorkingTime),
-                                                        UserName = ag.Key.UserName
-                                                    })
-                                            .ToListAsync());
+            /* var model = (await db.Projects.SelectMany(p => p.Activities)
+                                                     .Finished()
+                                                     .GroupBy(a => a.AssignedUser)
+                                                     .Select(ag => new
+                                                     {
+                                                         WorkingTimes = ag.Select(a1 => a1.WorkingTime),
+                                                         UserName = ag.Key.UserName
+                                                     })
+                                             .ToListAsync());
 
-            var m2 = model.Select(u => new UserTotalHoursViewModel()
-                                                {
-                                                    Name = u.UserName,
-                                                    TotalHours = u.WorkingTimes.Sum(w => w.TotalHours)
-                                                }).OrderByDescending(u => u.TotalHours).ToList();
+             var m2 = model.Select(u => new UserTotalHoursViewModel()
+                                                 {
+                                                     Name = u.UserName,
+                                                     TotalHours = u.WorkingTimes.Sum(w => w.TotalHours)
+                                                 }).OrderByDescending(u => u.TotalHours).ToList();*/
+            var m2 = new List<UserTotalHoursViewModel>();
             return View(m2);
         }
 
         public async Task<ActionResult> UserTotalHoursRemaining()
         {
-            var model = (await db.Projects.SelectMany(p => p.Activities)
+            /*var model = (await db.Projects.SelectMany(p => p.Activities)
                                                     .Doing()
                                                     .GroupBy(a => a.AssignedUser)
                                                     .Select(ag => new
@@ -124,7 +126,8 @@ namespace TimeTracking.Controllers
             {
                 Name = u.UserName,
                 TotalHours = u.WorkingTimes.Sum(w => w.TotalHours)
-            }).OrderByDescending(u => u.TotalHours).ToList();
+            }).OrderByDescending(u => u.TotalHours).ToList();*/
+            var m2 = new List<UserTotalHoursViewModel>();
             return View(m2);
         }
 
@@ -145,23 +148,22 @@ namespace TimeTracking.Controllers
         [HttpPost]
         public async Task<ActionResult> UserProductivityPerPeriod(SetPeriodViewModel model)
         {
-            var m = (await db.Projects.SelectMany(p => p.Activities).Finished().OnInterval(model.FinalDate, model.InitialDate).GroupBy(a => a.AssignedUser)
-                                                    .Select(ag => new
-                                                    {
-                                                        WorkingTimes = ag.Select(a1 => a1.WorkingTime),
-                                                        UserName = ag.Key.UserName
-                                                    })
-                                            .ToListAsync());
+            /* var m = (await db.Projects.SelectMany(p => p.Activities).Finished().OnInterval(model.FinalDate, model.InitialDate).GroupBy(a => a.AssignedUser)
+                                                     .Select(ag => new
+                                                     {
+                                                         WorkingTimes = ag.Select(a1 => a1.WorkingTime),
+                                                         UserName = ag.Key.UserName
+                                                     })
+                                             .ToListAsync());
 
 
-            model.ResultUsers = m.Select(u => new UserTotalHoursViewModel()
-            {
-                Name = u.UserName,
-                TotalHours = u.WorkingTimes.Sum(w => w.TotalHours)
-            }).OrderByDescending(u => u.TotalHours).ToList();
-
-
-
+             model.ResultUsers = m.Select(u => new UserTotalHoursViewModel()
+             {
+                 Name = u.UserName,
+                 TotalHours = u.WorkingTimes.Sum(w => w.TotalHours)
+             }).OrderByDescending(u => u.TotalHours).ToList();
+             */
+            
             return View(model);
 
 

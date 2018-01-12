@@ -8,7 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TimeTracking.Models;
-using Microsoft.AspNet.Identity;
+//using Microsoft.AspNet.Identity;
 using TimeTracking.Core.Models;
 using DayPilot.Web.Mvc;
 using DayPilot.Web.Mvc.Data;
@@ -18,6 +18,7 @@ using DayPilot.Web.Mvc.Recurrence;
 
 namespace TimeTracking.Controllers
 {
+    [Authorize]
     public class ActivitiesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -25,7 +26,7 @@ namespace TimeTracking.Controllers
         // GET: Projects
         public async Task<ActionResult> Index(int id)
         {
-            var userId = User.Identity.GetUserId();
+            var userId = User.Identity.Name;//.GetUserId();
             var model = await db.Projects.Where(p => p.ProjectID == id)
                                                  .SelectMany(p => p.Activities)
                                                  .Where(a => a.ActivityStatus != ActivityStatus.Deleted)
@@ -33,14 +34,14 @@ namespace TimeTracking.Controllers
                                                  {
                                                      ActivityId = a.ActivityID,
                                                      Name = a.Name,
-                                                     AssignedUser = a.AssignedUser.UserName,
+                                                   //  AssignedUser = a.AssignedUser.UserName,
                                                      ActivityStatus = a.ActivityStatus.ToString(),
-                                                     Creator = a.Creator.UserName,
+                                                    // Creator = a.Creator.UserName,
                                                      WorkingTime = a.WorkingTime,
                                                      Type = a.ActivityType.Description,
                                                      CreationDate = a.CreationDate,
                                                      //tem que verificar se o usuário logado é o gerente do projeto ou o criador da atividade ou o assignedUser
-                                                     CanEdit = a.Project.Owner.Id == userId || a.Creator.Id == userId || a.AssignedUser.Id == userId
+                                                    // CanEdit = a.Project.Owner.Id == userId || a.Creator.Id == userId || a.AssignedUser.Id == userId
 
                                                  })
                                           .ToListAsync();
@@ -53,7 +54,7 @@ namespace TimeTracking.Controllers
         // GET: Projects/Details/5
         public async Task<ActionResult> Details(int? id)
         {
-            var userId = User.Identity.GetUserId();
+            var userId = User.Identity.Name;//.GetUserId();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -68,12 +69,12 @@ namespace TimeTracking.Controllers
                     Name = a.Name,
                     ActivityType = a.ActivityType.Description,
                     ActivityStatus = a.ActivityStatus.ToString(),
-                    Creator = a.Creator.UserName,
-                    AssignedUser = a.AssignedUser.UserName,
+                   // Creator = a.Creator.UserName,
+                   // AssignedUser = a.AssignedUser.UserName,
                     WorkingTime = a.WorkingTime,
                     CreationDate = a.CreationDate,
                     ProjectId = a.Project.ProjectID,
-                    CanEdit = a.Project.Owner.Id == userId || a.Creator.Id == userId || a.AssignedUser.Id == userId
+                   // CanEdit = a.Project.Owner.Id == userId || a.Creator.Id == userId || a.AssignedUser.Id == userId
                 }).FirstOrDefaultAsync();
 
             if (model == null)
@@ -92,7 +93,7 @@ namespace TimeTracking.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             ViewBag.ActivityTypes = db.ActivityTypes.ToList();
-            ViewBag.MemberList = db.Projects.Where(p => p.ProjectID == id).SelectMany(p => p.ApplicationUsers).ToList();
+          //  ViewBag.MemberList = db.Projects.Where(p => p.ProjectID == id).SelectMany(p => p.ApplicationUsers).ToList();
 
             var model = new CreateActivityViewModel
             {
@@ -108,8 +109,8 @@ namespace TimeTracking.Controllers
             int projectId = 0;
             //if (ModelState.IsValid)
             //{
-            var userId = User.Identity.GetUserId();
-            ApplicationUser user = null;
+            var userId = User.Identity.Name;//.GetUserId();
+            //ApplicationUser user = null;
 
             foreach (var item in activities)
             {
@@ -119,10 +120,10 @@ namespace TimeTracking.Controllers
                 {
                     Name = item.Name,
                     CreationDate = DateTime.UtcNow,
-                    AssignedUser = user,
+                   // AssignedUser = user,
                     Project = await db.Projects.FirstAsync(p => p.ProjectID == item.ProjectId),
                     WorkingTime = item.WorkingTime,
-                    Creator = await db.Users.FirstAsync(u => u.Id == userId),
+                   // Creator = await db.Users.FirstAsync(u => u.Id == userId),
                     ActivityStatus = Core.Models.ActivityStatus.Created,
                     NoOfHours = item.NoOfHours
                 };
@@ -155,8 +156,8 @@ namespace TimeTracking.Controllers
 
             if (ModelState.IsValid)
             {
-                var userId = User.Identity.GetUserId();
-                ApplicationUser user = null;
+                var userId = User.Identity.Name;//.GetUserId();
+                //ApplicationUser user = null;
 
 
                 var activity = new Activity
@@ -164,10 +165,10 @@ namespace TimeTracking.Controllers
                     Name = model.Name,
                     ActivityType = await db.ActivityTypes.FindAsync(model.ActivityType),
                     CreationDate = DateTime.Now,
-                    AssignedUser = user,
+                   // AssignedUser = user,
                     Project = await db.Projects.FirstAsync(p => p.ProjectID == model.ProjectId),
                     WorkingTime = model.WorkingTime,
-                    Creator = await db.Users.FirstAsync(u => u.Id == userId),
+                  //  Creator = await db.Users.FirstAsync(u => u.Id == userId),
                     ActivityStatus = Core.Models.ActivityStatus.Created
                 };
 
@@ -177,7 +178,7 @@ namespace TimeTracking.Controllers
             }
 
             ViewBag.ActivityTypes = db.ActivityTypes.ToList();
-            ViewBag.MemberList = db.Projects.Where(p => p.ProjectID == model.ProjectId).SelectMany(p => p.ApplicationUsers).ToList();
+           // ViewBag.MemberList = db.Projects.Where(p => p.ProjectID == model.ProjectId).SelectMany(p => p.ApplicationUsers).ToList();
             return View(model);
         }
 
@@ -194,8 +195,8 @@ namespace TimeTracking.Controllers
 
             if (ModelState.IsValid)
             {
-                var userId = User.Identity.GetUserId();
-                ApplicationUser user = null;
+                var userId = User.Identity.Name;//.GetUserId();
+                //ApplicationUser user = null;
 
                 foreach (var model in models)
                 {
@@ -214,7 +215,7 @@ namespace TimeTracking.Controllers
             }
 
             ViewBag.ActivityTypes = db.ActivityTypes.ToList();
-            ViewBag.MemberList = db.Projects.Where(p => p.ProjectID == models[0].ProjectId).SelectMany(p => p.ApplicationUsers).ToList();
+           // ViewBag.MemberList = db.Projects.Where(p => p.ProjectID == models[0].ProjectId).SelectMany(p => p.ApplicationUsers).ToList();
             return View(models);
         }
 
@@ -231,7 +232,7 @@ namespace TimeTracking.Controllers
                 Status = a.ActivityStatus.ToString(),
                 ActivityType = a.ActivityType.ActivityTypeID,
                 ProjectId = a.Project.ProjectID,
-                AssignedUserId = a.AssignedUser.UserName
+               // AssignedUserId = a.AssignedUser.UserName
 
             }).FirstOrDefaultAsync(ea => ea.ActivityId == id);
             if (editActivity == null)
@@ -242,10 +243,10 @@ namespace TimeTracking.Controllers
             ViewBag.ActivityStatusList = Enum.GetValues(typeof(ActivityStatus)).Cast<ActivityStatus>().
                                          Select(a => new { Text = a.ToString(), Value = ((int)a).ToString() });
             ViewBag.ActivityTypes = await db.ActivityTypes.ToListAsync();
-            ViewBag.Users = await db.Activities.Where(a => a.ActivityID == id).
+         /*   ViewBag.Users = await db.Activities.Where(a => a.ActivityID == id).
                                                 SelectMany(a => a.Project.ApplicationUsers.
                                                 Select(u => new { Text = u.UserName, Value = u.Id }))
-                                                .ToListAsync();
+                                                .ToListAsync();*/
 
 
             return View(editActivity);
@@ -270,7 +271,7 @@ namespace TimeTracking.Controllers
             {
                 activity.ActivityType = await db.ActivityTypes.FindAsync(model.ActivityType);
                 activity.ActivityStatus = newStatus;
-                activity.AssignedUser = await db.Users.FirstAsync(u => u.Id == model.AssignedUserId);
+              //  activity.AssignedUser = await db.Users.FirstAsync(u => u.Id == model.AssignedUserId);
                 activity.FinalizationDate = finalizationDate;
 
                 await db.SaveChangesAsync();
@@ -281,10 +282,10 @@ namespace TimeTracking.Controllers
             ViewBag.ActivityStatusList = Enum.GetValues(typeof(ActivityStatus)).Cast<ActivityStatus>().
                                          Select(a => new { Text = a.ToString(), Value = ((int)a).ToString() });
             ViewBag.ActivityTypes = db.ActivityTypes.ToList();
-            ViewBag.Users = await db.Activities.Where(a => a.ActivityID == model.ActivityId).
+            /*ViewBag.Users = await db.Activities.Where(a => a.ActivityID == model.ActivityId).
                                                SelectMany(a => a.Project.ApplicationUsers.
                                                Select(u => new { Text = u.UserName, Value = u.Id }))
-                                               .ToListAsync();
+                                               .ToListAsync();*/
             return View(model);
         }
 
@@ -315,7 +316,7 @@ namespace TimeTracking.Controllers
             var model = await db.Activities.Where(a => a.ActivityID == id).SelectMany(a => a.Comments).Select(c => new CommentsViewModel()
             {
                 CommentId = c.CommentId,
-                CommentOwner = c.CommentOwner.UserName,
+             //   CommentOwner = c.CommentOwner.UserName,
                 CreationDate = c.CreationDate,
                 Description = c.Description
             }).ToListAsync();
@@ -348,14 +349,14 @@ namespace TimeTracking.Controllers
         {
             if (ModelState.IsValid)
             {
-                string userId = User.Identity.GetUserId();
+                string userId = User.Identity.Name;//.GetUserId();
                 var activity = await db.Activities.FindAsync(model.ActivityId);
 
                 var newComment = new Comment()
                 {
 
                     Description = model.Description,
-                    CommentOwner = await db.Users.FirstAsync(u => u.Id == userId),
+                   // CommentOwner = await db.Users.FirstAsync(u => u.Id == userId),
                     CreationDate = DateTime.Now
                 };
                 activity.Comments.Add(newComment);
@@ -364,9 +365,7 @@ namespace TimeTracking.Controllers
 
             }
             return RedirectToAction("Details", new { id = model.ActivityId });
-
         }
-
-
+        
     }
 }
